@@ -1,4 +1,4 @@
-# Домашнее задание к занятию 5. «Практическое применение Docker»
+# Домашнее задание к занятию 5. «Практическое применение Docker» Дедяхин Игорь
 
 
 
@@ -44,6 +44,43 @@ See 'snap info docker' for additional versions.
 ### ВНИМАНИЕ!
 !!! В процессе последующего выполнения ДЗ НЕ изменяйте содержимое файлов в fork-репозитории! Ваша задача ДОБАВИТЬ 5 файлов: ```Dockerfile.python```, ```compose.yaml```, ```.gitignore```, ```.dockerignore```,```bash-скрипт```. Если вам понадобилось внести иные изменения в проект - вы что-то делаете неверно!
 ---
+
+## Решение
+
+Делаем [форк репозитория](https://github.com/igorsprint-code/shvirtd-example-python) 
+
+Создаем [.dockerignore](https://github.com/igorsprint-code/shvirtd-example-python/blob/main/.dockerignore)
+
+Создаём файл ```Dockerfile.python```
+
+```
+FROM python:3.12-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]  
+```
+
+
+
+Создаем образ и запускаем контейнер:
+
+![screen](screenshots/2.png)
+
+
+Создаем multistage сборку вместо single stage, обновленный [Dockerfile.python](https://github.com/igorsprint-code/shvirtd-example-python/blob/main/Dockerfile.python)
+
+Создаем образ:
+
+![screen](screenshots/3.png)
+
+И запускаем контейнер
+
+![screen](screenshots/4.png)
+
+
+
 
 ## Задача 2 (*)
 1. Создайте в yandex cloud container registry с именем "test" с помощью "yc tool" . [Инструкция](https://cloud.yandex.ru/ru/docs/container-registry/quickstart/?from=int-console-help)

@@ -89,6 +89,42 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "5000"]
 4. Просканируйте образ на уязвимости.
 5. В качестве ответа приложите отчет сканирования.
 
+
+## Решение
+
+Создаем container registry с именем "test" с помощью "yc tool":
+
+```
+yc container registry create --name test
+```
+
+Настройка аутентификации локального docker в yandex container registry:
+
+![screen](screenshots/5.png)
+
+
+Заливаем образ из 1го задания в registry:
+
+
+![screen](screenshots/6.png)
+
+
+
+Результат сканирования:
+
+![screen](screenshots/7.png)
+
+
+
+
+
+
+
+
+
+
+
+
 ## Задача 3
 1. Изучите файл "proxy.yaml"
 2. Создайте в репозитории с проектом файл ```compose.yaml```. С помощью директивы "include" подключите к нему файл "proxy.yaml".

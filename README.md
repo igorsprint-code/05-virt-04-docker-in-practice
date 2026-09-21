@@ -116,13 +116,15 @@ yc container registry create --name test
 
 
 
+UPD!! Уже во время выполнения 3го задания начались проблемы с использованием yandex registry, при попытке залить образ возникак ошибка "Cannot read manifest data", тэг создавался неправильно, и скачать образ с yandex registry было невозможно. Проблема решилась созданием образа через команду:
 
+```
+DOCKER_BUILDKIT=0 docker build -f Dockerfile.python -t py_app:late
+```
 
+Результат выполенения:
 
-
-
-
-
+![screen](screenshots/8.png)
 
 
 
@@ -142,6 +144,21 @@ yc container registry create --name test
 5. Подключитесь к БД mysql с помощью команды ```docker exec -ti <имя_контейнера> mysql -uroot -p<пароль root-пользователя>```(обратите внимание что между ключем -u и логином root нет пробела. это важно!!! тоже самое с паролем) . Введите последовательно команды (не забываем в конце символ ; ): ```show databases; use <имя вашей базы данных(по-умолчанию virtd, как это указано в .env)>; show tables; SELECT * from requests LIMIT 10;```. Примечание: таблица в БД создается после первого поступившего запроса к приложению.
 
 6. Остановите проект. В качестве ответа приложите скриншот sql-запроса.
+
+
+## Решение
+
+Создаем файл [compose.yaml](https://github.com/igorsprint-code/shvirtd-example-python/blob/main/compose.yaml) с сервисами ```web``` и  ```db```
+
+Вывод команды ```docker compose -f compose.yaml up -d``` и ``````docker compose -f compose.yaml up -d``````
+
+
+![screen](screenshots/9.png)
+
+Подключаемся к БД mysql с помощью команды ```docker exec -ti shvirtd-example-python-db-1 mysql -uroot -pYtReWq4321```, выполняем команды  ```show databases; use <имя вашей базы данных(по-умолчанию virtd, как это указано в .env)>; show tables; SELECT * from requests LIMIT 10;``` :
+
+![screen](screenshots/10.png)
+
 
 ## Задача 4
 1. Запустите в Yandex Cloud ВМ (вам хватит 2 Гб Ram).

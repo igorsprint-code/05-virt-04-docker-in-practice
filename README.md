@@ -119,7 +119,7 @@ yc container registry create --name test
 UPD!! Уже во время выполнения 3го задания начались проблемы с использованием yandex registry, при попытке залить образ возникак ошибка "Cannot read manifest data", тэг создавался неправильно, и скачать образ с yandex registry было невозможно. Проблема решилась созданием образа через команду:
 
 ```
-DOCKER_BUILDKIT=0 docker build -f Dockerfile.python -t py_app:late
+DOCKER_BUILDKIT=0 docker build -f Dockerfile.python -t py_app:latest
 ```
 
 Результат выполенения:
@@ -167,6 +167,59 @@ DOCKER_BUILDKIT=0 docker build -f Dockerfile.python -t py_app:late
 4. Зайдите на сайт проверки http подключений, например(или аналогичный): ```https://check-host.net/check-http``` и запустите проверку вашего сервиса ```http://<внешний_IP-адрес_вашей_ВМ>:8090```. Таким образом трафик будет направлен в ingress-proxy. Трафик должен пройти через цепочки: Пользователь → Internet → Nginx → HAProxy → FastAPI(запись в БД) → HAProxy → Nginx → Internet → Пользователь
 5. (Необязательная часть) Дополнительно настройте remote ssh context к вашему серверу. Отобразите список контекстов и результат удаленного выполнения ```docker ps -a```
 6. Повторите SQL-запрос на сервере и приложите скриншот и ссылку на fork.
+
+
+
+## Решение
+
+ВМ создана:
+
+![screen](screenshots/11.png)
+
+Подключаемся по shh:
+
+![screen](screenshots/12.png)
+
+Устанавливаем docker и yc:
+
+![screen](screenshots/13.png)
+
+Создаем [скрипт](https://github.com/igorsprint-code/shvirtd-example-python/blob/main/pyapp.sh), который скачает fork-репозиторий в каталог /opt и запустит проект целиком:
+
+![screen](screenshots/14.png)
+
+
+Проект запустился, конейнеры работают:
+
+![screen](screenshots/15.png)
+
+
+Проверка сервиса на сайте ```https://check-host.net/check-http```:
+
+![screen](screenshots/16.png)
+
+
+Подключаемся к БД mysql  с помощью команды ```docker exec -ti shvirtd-example-python-db-1 mysql -uroot -pYtReWq4321```, выполняем команды  ```show databases; use <имя вашей базы данных(по-умолчанию virtd, как это указано в .env)>; show tables; SELECT * from requests LIMIT 10;``` :
+
+![screen](screenshots/17.png)
+
+Останавливаем проект:
+
+![screen](screenshots/18.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Задача 5 (*)
 1. Напишите и задеплойте на вашу облачную ВМ bash скрипт, который произведет резервное копирование БД mysql в директорию "/opt/backup" с помощью запуска в сети "backend" контейнера из образа ```schnitzler/mysqldump``` при помощи ```docker run ...``` команды. Подсказка: "документация образа."

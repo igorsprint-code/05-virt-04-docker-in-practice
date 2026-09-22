@@ -116,7 +116,7 @@ yc container registry create --name test
 
 
 
-UPD!! Уже во время выполнения 3го задания начались проблемы с использованием yandex registry, при попытке залить образ возникак ошибка "Cannot read manifest data", тэг создавался неправильно, и скачать образ с yandex registry было невозможно. Проблема решилась созданием образа через команду:
+UPD!! Уже во время выполнения 3го задания начались проблемы с использованием yandex registry, при попытке залить образ возникала ошибка "Cannot read manifest data", тэг создавался неправильно, и скачать образ с yandex registry было невозможно. Проблема решилась созданием образа через команду:
 
 ```
 DOCKER_BUILDKIT=0 docker build -f Dockerfile.python -t py_app:latest
@@ -189,7 +189,7 @@ DOCKER_BUILDKIT=0 docker build -f Dockerfile.python -t py_app:latest
 ![screen](screenshots/14.png)
 
 
-Проект запустился, конейнеры работают:
+Проект запустился, контейнеры работают:
 
 ![screen](screenshots/15.png)
 

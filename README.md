@@ -208,6 +208,9 @@ DOCKER_BUILDKIT=0 docker build -f Dockerfile.python -t py_app:latest
 ![screen](screenshots/18.png)
 
 
+[Форк репозитория](https://github.com/igorsprint-code/shvirtd-example-python)
+
+
 
 
 
